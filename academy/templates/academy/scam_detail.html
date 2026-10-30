@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% load i18n tr_tags %}
+{% block title %}{% t scam "nom" %}{% endblock %}
+{% block content %}
+<h1>{% t scam "nom" %}</h1>
+<p class="lead">{% t scam "explication" %}</p>
+<h2>{% trans "Exemple" %}</h2><blockquote>{% t scam "exemple" %}</blockquote>
+<h2>{% trans "Comment la reconnaître" %}</h2><ul class="check">{% for x in scam.signes.fr %}<li>{{ x }}</li>{% endfor %}</ul>
+<h2>{% trans "Erreurs à éviter" %}</h2><ul class="cross">{% for x in scam.erreurs.fr %}<li>{{ x }}</li>{% endfor %}</ul>
+<h2>{% trans "Comment se protéger" %}</h2><ul class="check">{% for x in scam.protections.fr %}<li>{{ x }}</li>{% endfor %}</ul>
+<p><a href="{% url 'academy:list' %}">{% trans "Toutes les arnaques" %}</a></p>
+{% endblock %}

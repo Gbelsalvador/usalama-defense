@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% load i18n tr_tags %}
+{% block content %}
+<h1>{% trans "Que dois-je faire ?" %}</h1>
+<ul class="links">{% for s in situations %}<li><a href="{% url 'academy:situation' s.slug %}">{% t s "titre" %}</a></li>{% endfor %}</ul>
+{% endblock %}

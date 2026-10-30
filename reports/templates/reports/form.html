@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% load i18n %}
+{% block content %}
+<h1>{% trans "Signaler une arnaque" %}</h1>
+<p>{% trans "C'est volontaire et anonyme. Les numéros, liens et adresses e-mail sont masqués avant l'enregistrement. N'écris jamais de code PIN ou de mot de passe." %}</p>
+<form method="post">{% csrf_token %}
+  {% for f in form %}
+  <div class="field">
+    {% if f.field.widget.input_type == "checkbox" %}<label><input type="checkbox" name="{{ f.html_name }}"> {{ f.label }}</label>
+    {% else %}<label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% endif %}
+    {% for e in f.errors %}<p class="err">{{ e }}</p>{% endfor %}
+  </div>{% endfor %}
+  <button class="btn" type="submit">{% trans "Envoyer le signalement" %}</button>
+</form>
+{% endblock %}

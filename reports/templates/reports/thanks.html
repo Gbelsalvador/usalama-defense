@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% load i18n %}
+{% block content %}
+<h1>{% trans "Merci" %}</h1>
+<p>{% trans "Ton signalement a été enregistré de façon anonyme." %}</p>
+<a class="btn" href="{% url 'core:home' %}">{% trans "Retour à l'accueil" %}</a>
+{% endblock %}

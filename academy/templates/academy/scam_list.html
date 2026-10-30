@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% load i18n tr_tags %}
+{% block content %}
+<h1>{% trans "Les arnaques courantes" %}</h1>
+<ul class="links">
+{% for s in scams %}<li><a href="{% url 'academy:detail' s.slug %}"><strong>{% t s "nom" %}</strong><small>{% t s "explication" %}</small></a></li>
+{% empty %}<li>{% trans "Aucune fiche pour le moment." %}</li>{% endfor %}
+</ul>
+{% endblock %}

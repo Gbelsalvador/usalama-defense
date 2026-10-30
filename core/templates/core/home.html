@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% load i18n tr_tags %}
+{% block content %}
+<section class="hero">
+  <h1>{% trans "Un vrai agent ne demande jamais ton code PIN." %}</h1>
+  <p>{% trans "Colle un message suspect. On te dit si c'est une arnaque et ce qu'il faut faire." %}</p>
+  <a class="btn" href="{% url 'analyzer:page' %}">{% trans "Vérifier un message" %}</a>
+</section>
+<section>
+  <h2>{% trans "Que dois-je faire ?" %}</h2>
+  <ul class="links">
+    {% for s in situations %}<li><a href="{% url 'academy:situation' s.slug %}">{% t s "titre" %}</a></li>{% endfor %}
+  </ul>
+</section>
+{% endblock %}

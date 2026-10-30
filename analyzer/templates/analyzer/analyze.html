@@ -1,0 +1,42 @@
+{% extends "base.html" %}{% load i18n static %}
+{% block content %}
+<h1>{% trans "Vérifier un message" %}</h1>
+<p>{% trans "Colle ici le SMS ou le message WhatsApp reçu. L'analyse se fait sur ton téléphone : le texte n'est pas envoyé à nos serveurs." %}</p>
+<label for="msg" class="sr">{% trans "Message à vérifier" %}</label>
+<textarea id="msg" rows="6" placeholder="{% trans 'Colle le message ici' %}"></textarea>
+<button class="btn" id="go" type="button">{% trans "Analyser" %}</button>
+
+<section id="verdict" class="verdict" hidden aria-live="polite">
+  <h2 id="v-title"></h2>
+  <p id="v-sub"></p>
+  <h3>{% trans "Ce qui est suspect" %}</h3><ul id="v-why"></ul>
+  <h3>{% trans "Ce que tu dois faire" %}</h3><ul id="v-do"></ul>
+  <p class="note">{% trans "Aucun outil ne détecte toutes les arnaques. En cas de doute, ne donne rien et contacte ton opérateur par son numéro officiel." %}</p>
+</section>
+
+<section>
+  <h2>{% trans "Mon historique" %}</h2>
+  <p class="note">{% trans "Gardé uniquement dans ce navigateur." %}</p>
+  <ul id="history" class="history"></ul>
+  <button class="btn ghost" id="clear" type="button">{% trans "Supprimer mon historique" %}</button>
+</section>
+
+<script>
+window.USALAMA = {
+  rulesUrl: "{% url 'analyzer:rules' %}",
+  lang: "{{ LANGUAGE_CODE }}",
+  t: {
+    faible: "{% trans 'Vigilance faible' %}",
+    verifier: "{% trans 'Situation à vérifier' %}",
+    eleve: "{% trans 'Danger élevé' %}",
+    subFaible: "{% trans "Aucun signe connu détecté, mais reste prudent." %}",
+    subVerifier: "{% trans "Plusieurs signes inquiétants. Vérifie avant d'agir." %}",
+    subEleve: "{% trans "Ce message ressemble fortement à une arnaque. Ne réponds pas et ne clique sur rien." %}",
+    lien: "{% trans "Le message contient un lien. Ne clique pas sur un lien reçu par SMS ou WhatsApp." %}",
+    vide: "{% trans 'Aucune analyse pour le moment.' %}",
+    erreur: "{% trans "Impossible de charger les règles. Vérifie ta connexion." %}"
+  }
+};
+</script>
+<script src="{% static 'js/analyzer.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% load i18n tr_tags %}
+{% block content %}
+<h1>{% t s "titre" %}</h1>
+<p>{% trans "Dans cet ordre :" %}</p>
+<ol class="steps">{% for a in s.actions.fr %}<li>{{ a }}</li>{% endfor %}</ol>
+<p><a href="{% url 'academy:situations' %}">{% trans "Autres situations" %}</a></p>
+{% endblock %}

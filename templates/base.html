@@ -1,0 +1,33 @@
+{% load static i18n %}<!doctype html>
+{% get_current_language as LANG %}
+<html lang="{{ LANG }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}USALAMA DÉFENSE{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'css/usalama.css' %}">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="{% url 'core:home' %}">USALAMA <span>DÉFENSE</span></a>
+  <form action="{% url 'set_language' %}" method="post" class="lang">{% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    <label class="sr" for="lang">{% trans "Langue" %}</label>
+    <select id="lang" name="language" onchange="this.form.submit()">
+      {% get_available_languages as LANGUAGES %}
+      {% for code, name in LANGUAGES %}<option value="{{ code }}" {% if code == LANG %}selected{% endif %}>{{ name }}</option>{% endfor %}
+    </select>
+  </form>
+</header>
+<nav class="tabs" aria-label="Navigation">
+  <a href="{% url 'analyzer:page' %}">{% trans "Vérifier un message" %}</a>
+  <a href="{% url 'academy:situations' %}">{% trans "Que dois-je faire ?" %}</a>
+  <a href="{% url 'academy:list' %}">{% trans "Les arnaques" %}</a>
+  <a href="{% url 'reports:form' %}">{% trans "Signaler" %}</a>
+</nav>
+<main>{% block content %}{% endblock %}</main>
+<footer>
+  {% trans "USALAMA DÉFENSE ne vous demandera jamais votre code PIN, votre OTP ou votre mot de passe." %}
+</footer>
+</body>
+</html>
