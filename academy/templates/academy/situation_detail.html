@@ -2,6 +2,7 @@
 {% block content %}
 <h1>{% t s "titre" %}</h1>
 <p>{% trans "Dans cet ordre :" %}</p>
-<ol class="steps">{% for a in s.actions.fr %}<li>{{ a }}</li>{% endfor %}</ol>
+{% t s "actions" as actions %}
+<ol class="steps">{% for a in actions %}<li>{{ a }}</li>{% endfor %}</ol>
 <p><a href="{% url 'academy:situations' %}">{% trans "Autres situations" %}</a></p>
 {% endblock %}
