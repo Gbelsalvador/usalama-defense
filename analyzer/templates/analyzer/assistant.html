@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% load i18n %}
+{% block content %}
+<h1>{% trans "Assistant de prévention" %}</h1>
+<p>{% trans "Décris un appel, un message ou une situation inhabituelle. L'assistant répond dans la langue sélectionnée." %}</p>
+<div class="notice">
+  <strong>{% trans "Confidentialité" %}</strong>
+  <p>{% trans "Contrairement à l'analyse locale, cette fonction envoie ta description à Groq pour générer une réponse. Les liens, adresses e-mail, numéros et codes secrets détectés sont masqués avant l'envoi. N'inclus jamais de PIN, OTP, mot de passe ou donnée financière." %}</p>
+  <p>{% trans "L'assistant nécessite Internet et ne remplace pas ton opérateur. En cas de doute, vérifie toujours par un canal officiel." %}</p>
+</div>
+<form method="post">
+  {% csrf_token %}
+  {% for field in form %}
+  <div class="field">
+    {% if field.field.widget.input_type == "checkbox" %}
+      <label>{{ field }} {{ field.label }}</label>
+    {% else %}
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+    {% endif %}
+    {% for error in field.errors %}<p class="err">{{ error }}</p>{% endfor %}
+  </div>
+  {% endfor %}
+  <button class="btn" type="submit">{% trans "Demander conseil" %}</button>
+</form>
+{% if error %}<p class="err" role="alert">{{ error }}</p>{% endif %}
+{% if answer %}
+<section class="assistant-answer" aria-live="polite">
+  <h2>{% trans "Conseil de l'assistant" %}</h2>
+  <p>{{ answer|linebreaksbr }}</p>
+  <p class="note">{% trans "Une réponse automatique peut se tromper. Ne partage jamais tes codes et vérifie les conseils sensibles auprès de ton opérateur officiel." %}</p>
+</section>
+{% endif %}
+{% endblock %}

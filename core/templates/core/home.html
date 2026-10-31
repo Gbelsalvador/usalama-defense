@@ -4,6 +4,7 @@
   <h1>{% trans "Un vrai agent ne demande jamais ton code PIN." %}</h1>
   <p>{% trans "Colle un message suspect. On te dit si c'est une arnaque et ce qu'il faut faire." %}</p>
   <a class="btn" href="{% url 'analyzer:page' %}">{% trans "Vérifier un message" %}</a>
+  <a class="btn ghost" href="{% url 'analyzer:assistant' %}">{% trans "Décrire une situation à l'assistant" %}</a>
 </section>
 <section>
   <h2>{% trans "Que dois-je faire ?" %}</h2>

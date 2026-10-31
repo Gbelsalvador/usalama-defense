@@ -1,5 +1,9 @@
 {% extends "base.html" %}{% load i18n tr_tags %}
 {% block content %}
 <h1>{% trans "Que dois-je faire ?" %}</h1>
+<div class="offline-control">
+  <button class="btn ghost" type="button" data-cache-offline>{% trans "Enregistrer les conseils hors connexion" %}</button>
+  <output aria-live="polite"></output>
+</div>
 <ul class="links">{% for s in situations %}<li><a href="{% url 'academy:situation' s.slug %}">{% t s "titre" %}</a></li>{% endfor %}</ul>
 {% endblock %}

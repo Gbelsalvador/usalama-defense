@@ -23,7 +23,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
+    "core.middleware.UserLanguageMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -44,7 +44,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}}
 
 # Langues nationales absentes du catalogue Django
-for code, name, local in [("kg", "Kikongo", "Kikongo ya Leta"), ("lua", "Tshiluba", "Tshiluba")]:
+for code, name, local in [
+    ("ln", "Lingala", "Lingála"),
+    ("kg", "Kikongo", "Kikongo ya Leta"),
+    ("lua", "Tshiluba", "Tshiluba"),
+]:
     LANG_INFO.setdefault(code, {"bidi": False, "code": code, "name": name, "name_local": local})
 
 LANGUAGE_CODE = "fr"
@@ -54,6 +58,8 @@ LOCALE_PATHS = [BASE_DIR / "locale"]
 USE_I18N = True
 TIME_ZONE = "Africa/Kinshasa"
 USE_TZ = True
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "").strip()
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-20b").strip() or "openai/gpt-oss-20b"
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]

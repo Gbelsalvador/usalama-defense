@@ -21,11 +21,13 @@
 </header>
 <nav class="tabs" aria-label="Navigation">
   <a href="{% url 'analyzer:page' %}">{% trans "Vérifier un message" %}</a>
+  <a href="{% url 'analyzer:assistant' %}">{% trans "Assistant IA" %}</a>
   <a href="{% url 'academy:situations' %}">{% trans "Que dois-je faire ?" %}</a>
   <a href="{% url 'academy:list' %}">{% trans "Les arnaques" %}</a>
   <a href="{% url 'reports:form' %}">{% trans "Signaler" %}</a>
 </nav>
 <main>{% block content %}{% endblock %}</main>
+<script src="{% static 'js/offline.js' %}" defer></script>
 <footer>
   {% trans "USALAMA DÉFENSE ne vous demandera jamais votre code PIN, votre OTP ou votre mot de passe." %}
 </footer>

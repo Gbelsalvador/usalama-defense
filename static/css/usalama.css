@@ -33,6 +33,9 @@ ol.steps li{margin:.7rem 0;font-weight:600}
 blockquote{margin:0;padding:.8rem 1rem;background:var(--carte);border-radius:var(--rayon);font-style:italic}
 .note,.history{color:var(--doux);font-size:.95rem}
 .field{margin:1rem 0}.err{color:var(--danger)}
+.notice,.assistant-answer{padding:1rem 1.2rem;background:var(--carte);border-radius:var(--rayon);border-left:6px solid var(--signal);margin:1rem 0}
+.offline-control{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin:1rem 0}
+.offline-control output{color:var(--doux);font-size:.95rem}
 footer{color:var(--doux);font-size:.9rem;border-top:1px solid var(--doux);margin-top:2rem}
 .sr{position:absolute;left:-9999px}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}

@@ -4,4 +4,5 @@ app_name = "analyzer"
 urlpatterns = [
     path("", views.analyze_page, name="page"),
     path("regles.json", views.rules_json, name="rules"),
+    path("assistant/", views.assistant_page, name="assistant"),
 ]

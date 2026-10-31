@@ -1,6 +1,10 @@
 {% extends "base.html" %}{% load i18n tr_tags %}
 {% block content %}
 <h1>{% trans "Les arnaques courantes" %}</h1>
+<div class="offline-control">
+  <button class="btn ghost" type="button" data-cache-offline>{% trans "Enregistrer les guides hors connexion" %}</button>
+  <output aria-live="polite"></output>
+</div>
 <ul class="links">
 {% for s in scams %}<li><a href="{% url 'academy:detail' s.slug %}"><strong>{% t s "nom" %}</strong><small>{% t s "explication" %}</small></a></li>
 {% empty %}<li>{% trans "Aucune fiche pour le moment." %}</li>{% endfor %}

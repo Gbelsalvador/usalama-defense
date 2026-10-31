@@ -57,3 +57,5 @@ class SeedCommandTests(TestCase):
             (Rule.objects.count(), Scam.objects.count(), Situation.objects.count()),
             initial_counts,
         )
+        self.assertEqual(Scam.objects.count(), 12)
+        self.assertEqual(Situation.objects.count(), 9)
