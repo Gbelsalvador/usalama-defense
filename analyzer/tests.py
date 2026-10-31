@@ -1,6 +1,5 @@
-import json
-from io import BytesIO
-from unittest.mock import patch
+from types import SimpleNamespace
+from unittest.mock import MagicMock, patch
 
 from django.test import TestCase, override_settings
 from django.urls import reverse
@@ -55,11 +54,17 @@ class AssistantTests(TestCase):
         self.assertContains(response, "GROQ_API_KEY")
 
     @override_settings(GROQ_API_KEY="test-key", GROQ_MODEL="openai/gpt-oss-20b")
-    @patch("analyzer.llm.urlopen")
-    def test_groq_request_uses_configured_model_and_redacts_secrets(self, urlopen):
-        urlopen.return_value = BytesIO(
-            b'{"choices":[{"message":{"content":"Ne partage pas ce code."}}]}'
+    @patch("analyzer.llm.Groq")
+    def test_groq_sdk_uses_configured_model_and_redacts_secrets(self, groq_client_class):
+        client = MagicMock()
+        client.chat.completions.create.return_value = SimpleNamespace(
+            choices=[
+                SimpleNamespace(
+                    message=SimpleNamespace(content="Ne partage pas ce code.")
+                )
+            ]
         )
+        groq_client_class.return_value.__enter__.return_value = client
 
         answer = ask_groq(
             "Mon code PIN est 123456, écris-moi à test@example.com",
@@ -67,13 +72,18 @@ class AssistantTests(TestCase):
         )
 
         self.assertEqual(answer, "Ne partage pas ce code.")
-        request = urlopen.call_args.args[0]
-        payload = json.loads(request.data)
-        self.assertEqual(payload["model"], "openai/gpt-oss-20b")
-        self.assertIn("français", payload["messages"][0]["content"])
-        self.assertNotIn("123456", payload["messages"][1]["content"])
-        self.assertNotIn("test@example.com", payload["messages"][1]["content"])
-        self.assertEqual(request.get_header("Authorization"), "Bearer test-key")
+        groq_client_class.assert_called_once_with(
+            api_key="test-key",
+            timeout=30.0,
+            max_retries=1,
+        )
+        call = client.chat.completions.create.call_args.kwargs
+        self.assertEqual(call["model"], "openai/gpt-oss-20b")
+        self.assertEqual(call["temperature"], 0.2)
+        self.assertEqual(call["max_completion_tokens"], 700)
+        self.assertIn("français", call["messages"][0]["content"])
+        self.assertNotIn("123456", call["messages"][1]["content"])
+        self.assertNotIn("test@example.com", call["messages"][1]["content"])
 
     @override_settings(GROQ_API_KEY="")
     def test_groq_requires_api_key(self):

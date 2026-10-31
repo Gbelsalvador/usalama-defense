@@ -2,8 +2,11 @@ import os
 from pathlib import Path
 from django.conf.locale import LANG_INFO
 from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
+
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me")
 DEBUG = os.environ.get("DEBUG", "1") == "1"
 if not DEBUG and SECRET_KEY == "dev-only-change-me":

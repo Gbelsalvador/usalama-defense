@@ -4,6 +4,15 @@ Application Django de prévention des arnaques, avec analyse locale des messages
 
 ## Installation locale
 
+Crée un fichier `.env` à la racine du projet pour les paramètres privés, par exemple :
+
+```dotenv
+GROQ_API_KEY=ta-cle-groq
+GROQ_MODEL=openai/gpt-oss-20b
+```
+
+Le fichier `.env` est ignoré par Git. Une variable déjà définie dans l'environnement du système ou du serveur reste prioritaire sur celle du fichier.
+
 ```powershell
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
